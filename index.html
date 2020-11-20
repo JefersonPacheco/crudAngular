@@ -1,3 +1,4 @@
+<!-- Jeferson Pacheco - 18/11/2020 -->
 <!DOCTYPE html>
 <html lang="pt-br" ng-app="crud">
 <head>
@@ -7,7 +8,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!--<script src="angular/angular.min.js"></script>-->
     <script src="angular/app.js"></script>
 </head>
 
@@ -21,20 +21,18 @@
 </div>
 <hr>
 <div class=row>
-    <div ng-controller="controller">
-        <div class='col-sm-offset-2 col-sm-9'>
-            <div class='col-sm-4'>
-                <label>Nome:</label>
-                <input ng-model="nome" class="form-control" />
-            </div>    
-            <div class='col-sm-4'>
-                <label>CNPJ:</label>
-                <input ng-model="cnpj" id="cnpj" class="form-control"/>
-            </div>
-            <div class='col-sm-1'>
-                <label></label>
-                <input type="button" class="btn btn-primary" value="Pesquisar" ng-click="pesquisarEmpresa(nome, cnpj)" /> 
-            </div>
+    <div class='col-sm-offset-2 col-sm-9'>
+        <div class='col-sm-4'>
+            <label>Nome:</label>
+            <input ng-model="nomepesquisa" class="form-control" />
+        </div>    
+        <div class='col-sm-4'>
+            <label>CNPJ:</label>
+            <input ng-model="cnpjpesquisa" id="cnpj" class="form-control"/>
+        </div>
+        <div class='col-sm-1'>
+            <label></label>
+            <button ng-click="getRequest()" class="btn btn-primary col-sm-offset-8">Pesquisar</button>
         </div>
     </div>
 </div>
@@ -53,17 +51,6 @@
             </thead>
             <tbody>
             <tr ng-repeat="empresa in empresas">
-                <td>{{empresa.nome}}</td>
-                <td>{{empresa.cnpj}}</td>
-                <td>{{empresa.data}}</td>
-                <td>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModalEditar" ng-click="selecionaEmpresa(empresa)">Editar</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalExcluir" ng-click="selecionaEmpresa(empresa)">Excluir</button>
-                </td>
-            </tr>
-            <tr ng-repeat="empresa in empresas2">
                 <td>{{empresa.nome}}</td>
                 <td>{{empresa.cnpj}}</td>
                 <td>{{empresa.data}}</td>
@@ -96,7 +83,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2">CNPJ</label>
                         <div class="col-sm-10">
-                            <input type="tel" class="form-control" id="cnpj" placeholder="CNPJ..." ng-model="cnpj">
+                            <input type="tel" class="form-control" id="cnpjnovo" placeholder="CNPJ..." ng-model="cnpj">
                         </div>
                     </div>
                     <div class="form-group">
@@ -138,7 +125,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2">cnpj</label>
                         <div class="col-sm-10">
-                            <input type="tel" class="form-control" id="cnpj" placeholder="cnpj..." ng-model="empresaSelecionada.cnpj">
+                            <input type="tel" class="form-control" id="cnpjedita" placeholder="cnpj..." ng-model="empresaSelecionada.cnpj">
                         </div>
                     </div>
                     <div class="form-group">
@@ -186,6 +173,8 @@
     $(document).ready(function () {
         $('#data').mask('99/99/9999');
         $('#cnpj').mask('99.999.999/9999-99');
+        $('#cnpjedita').mask('99.999.999/9999-99');
+        $('#cnpjnovo').mask('99.999.999/9999-99');
     });
 </script>
 

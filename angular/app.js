@@ -12,6 +12,30 @@ crud.controller("controller", function ($scope, $http) {
    $scope.cnpj = null;
    $scope.data = null;
 
+   $scope.getRequest = function() {
+
+        var nome = $scope.nomepesquisa;
+        var cnpj = $scope.cnpjpesquisa;
+
+        if($scope.nomepesquisa == null){
+            nome = "Vazio"; 
+        }
+        if($scope.cnpjpesquisa == null){
+            cnpj = "123"; 
+        }else{
+            cnpj = $scope.cnpjpesquisa = $scope.cnpjpesquisa.replace("/","").replace(".","").replace("-","").replace(".","");
+        }
+
+        $http.get('https://localhost:44396/api/empresas/pesquisar/'+nome+'/'+cnpj+'').then(  
+        function successCallback(response) {
+            $scope.empresas = response.data;
+        },
+        function errorCallback(response) {
+            console.log("Unable to perform get request");
+        }
+        );
+    };
+
    $scope.empresas = carregarEmpresas();
 
    function carregarEmpresas(){
@@ -29,12 +53,12 @@ crud.controller("controller", function ($scope, $http) {
         $scope.empresaSelecionada = empresa;
     };
 
-    $scope.pesquisarEmpresa = function(nome, cnpj) {
-        $http.get('https://localhost:44396/api/empresas/pesquisar/'+nome+'/'+cnpj+'').then(
+    $scope.pesquisarEmpresa = function() {
+        $http.get('https://localhost:44396/api/empresas/pesquisar/'+$scope.nomepesquisa+'/'+$scope.nomepesquisa+'').then(
             function successCallback(response) {
                 console.log(response.data);
-                $scope.empresas.
                 $scope.empresas = response.data;
+                //$scope.response = response.data;
             },
             function errorCallback(response) {
                 console.log("Erro ao processar requisição");
