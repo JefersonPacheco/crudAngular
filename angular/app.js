@@ -18,10 +18,10 @@ crud.controller("controller", function ($scope, $http) {
         var cnpj = $scope.cnpjpesquisa;
 
         if($scope.nomepesquisa == null){
-            nome = "Vazio"; 
+            nome = ""; 
         }
         if($scope.cnpjpesquisa == null){
-            cnpj = "123"; 
+            cnpj = ""; 
         }else{
             cnpj = $scope.cnpjpesquisa = $scope.cnpjpesquisa.replace("/","").replace(".","").replace("-","").replace(".","");
         }
@@ -58,7 +58,6 @@ crud.controller("controller", function ($scope, $http) {
             function successCallback(response) {
                 console.log(response.data);
                 $scope.empresas = response.data;
-                //$scope.response = response.data;
             },
             function errorCallback(response) {
                 console.log("Erro ao processar requisição");
