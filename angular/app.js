@@ -11,6 +11,7 @@ crud.controller("controller", function ($scope, $http) {
    $scope.nome = null;
    $scope.cnpj = null;
    $scope.data = null;
+   var host = 'https://localhost:5001';
 
    $scope.getRequest = function() {
 
@@ -26,7 +27,7 @@ crud.controller("controller", function ($scope, $http) {
             cnpj = $scope.cnpjpesquisa = $scope.cnpjpesquisa.replace("/","").replace(".","").replace("-","").replace(".","");
         }
 
-        $http.get('https://localhost:44396/api/empresas/pesquisar/'+nome+'/'+cnpj+'').then(  
+        $http.get(host + '/api/empresas/pesquisar/'+nome+'/'+cnpj+'').then(  
         function successCallback(response) {
             $scope.empresas = response.data;
         },
@@ -39,7 +40,7 @@ crud.controller("controller", function ($scope, $http) {
    $scope.empresas = carregarEmpresas();
 
    function carregarEmpresas(){
-        $http.get("https://localhost:44396/api/empresas").then(
+        $http.get(host + "/api/empresas").then(
             function successCallback(response) {
                 $scope.empresas = response.data;
             },
@@ -54,7 +55,7 @@ crud.controller("controller", function ($scope, $http) {
     };
 
     $scope.pesquisarEmpresa = function() {
-        $http.get('https://localhost:44396/api/empresas/pesquisar/'+$scope.nomepesquisa+'/'+$scope.nomepesquisa+'').then(
+        $http.get(host + '/api/empresas/pesquisar/'+$scope.nomepesquisa+'/'+$scope.nomepesquisa+'').then(
             function successCallback(response) {
                 console.log(response.data);
                 $scope.empresas = response.data;
@@ -73,7 +74,7 @@ crud.controller("controller", function ($scope, $http) {
             Data: data
         }
 
-        var url = 'https://localhost:44396/api/empresas', data = JSON.stringify(data), config='Content-Type';
+        var url = host + '/api/empresas', data = JSON.stringify(data), config='Content-Type';
 
         $http.post(url, data, config).then(function (response) {
             carregarEmpresas();
@@ -84,7 +85,7 @@ crud.controller("controller", function ($scope, $http) {
 
     $scope.alterarEmpresa = function () {
 
-        var url = 'https://localhost:44396/api/empresas/' + $scope.empresaSelecionada.id;
+        var url = host + '/api/empresas/' + $scope.empresaSelecionada.id;
 
         var data = JSON.stringify($scope.empresaSelecionada);
 
@@ -98,7 +99,7 @@ crud.controller("controller", function ($scope, $http) {
 
     $scope.excluirEmpresa = function(){
 
-        var url = 'https://localhost:44396/api/empresas/' + $scope.empresaSelecionada.id;
+        var url = host + '/api/empresas/' + $scope.empresaSelecionada.id;
 
         $http.delete(url).then(function (response) {
             carregarEmpresas();
